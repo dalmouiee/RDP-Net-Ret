@@ -1,0 +1,4 @@
+conv1 Xx512
+conv2 512x512
+conv3 512x1024
+conv4 1024x1024

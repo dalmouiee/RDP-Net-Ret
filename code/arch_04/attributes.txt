@@ -1,0 +1,4 @@
+conv1 Xx128
+conv2 128x128
+conv3 128x256
+conv4 256x256
