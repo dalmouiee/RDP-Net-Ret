@@ -1,0 +1,9 @@
+tensorflow
+numpy
+tensorboard
+matplotlib
+opencv-python
+sklearn
+pillow
+autopep8
+scipy

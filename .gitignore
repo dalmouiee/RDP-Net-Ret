@@ -129,6 +129,8 @@ dmypy.json
 .pyre/
 
 *.png
+*.jpg
+*.tif
 *.index
 *.meta
 *.sh
@@ -137,4 +139,4 @@ output.txt
 
 checkpoint
 summary/
-predict.py
+.DS_Store
