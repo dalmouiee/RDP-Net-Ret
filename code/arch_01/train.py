@@ -5,6 +5,12 @@
     Script to train a CNN to classify histologically stained images of feline retinae into 4 different classes.
 
     Architrecture 01, refer to paper for further details
+
+    Usage:
+        python train.py PATH_TO_TRAINING_IMAGES
+
+        ie. 
+        python train.py data/FINAL_TRAINING_SET
 '''
 
 import time

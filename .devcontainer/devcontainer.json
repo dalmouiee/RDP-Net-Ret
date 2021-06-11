@@ -1,0 +1,7 @@
+{
+	"name": "rdp_ret_net",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "rdp_ret_net",
+	"workspaceFolder": "/workspace",
+	"shutdownAction": "stopCompose"
+}

@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  rdp_ret_net:
+    image: dalmouiee/rdp_ret_net:devel
+    volumes:
+      - .:/workspace
