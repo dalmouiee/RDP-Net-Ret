@@ -6,16 +6,9 @@
 
     Architrecture 11, refer to paper for further details
 '''
-
-import time, math, random, os, sys
+import os, sys
 import dataset
 import tensorflow as tf
-from datetime import timedelta
-import numpy as np
-from tensorboard import summary as summary_lib
-import matplotlib as mp
-import matplotlib.pyplot as plt
-from cv2 import cv2
 from numpy.random import seed
 
 import tensorflow.compat.v1 as tf

@@ -7,3 +7,4 @@ sklearn
 pillow
 autopep8
 scipy
+scikit-learn

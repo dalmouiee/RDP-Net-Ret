@@ -1,4 +1,4 @@
-'''
+"""
     Author: Daniel Al Mouiee
     Date:   09/06/2021
 
@@ -9,7 +9,7 @@
             
             ie. python code/arch_01/predict_model_images.py data/testing/ code/arch_01/ model3
     
-'''
+"""
 
 from scipy import interp
 from sklearn.preprocessing import label_binarize
@@ -26,10 +26,13 @@ import sys
 import argparse
 import matplotlib.pyplot as plt
 import tensorflow.compat.v1 as tf
+
 tf.disable_v2_behavior()
 
 
-def plot_confusion_matrix(y_true, y_pred, titleName, classes, normalize=True, cmap=plt.cm.Blues):
+def plot_confusion_matrix(
+    y_true, y_pred, titleName, classes, normalize=True, cmap=plt.cm.Blues
+):
     """
     This function prints and plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
@@ -39,32 +42,39 @@ def plot_confusion_matrix(y_true, y_pred, titleName, classes, normalize=True, cm
     # Compute confusion matrix
     cm = confusion_matrix(y_true, y_pred)
     # Only use the labels that appear in the data
-    cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+    cm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
 
     fig, ax = plt.subplots()
-    im = ax.imshow(cm, interpolation='nearest', cmap=cmap)
+    im = ax.imshow(cm, interpolation="nearest", cmap=cmap)
     ax.figure.colorbar(im, ax=ax)
     # We want to show all ticks...
-    ax.set(xticks=np.arange(cm.shape[1]),
-           yticks=np.arange(cm.shape[0]),
-           # ... and label them with the respective list entries
-           xticklabels=classes, yticklabels=classes,
-           title=title,
-           ylabel='True label',
-           xlabel='Michael\'s predicted label')
+    ax.set(
+        xticks=np.arange(cm.shape[1]),
+        yticks=np.arange(cm.shape[0]),
+        # ... and label them with the respective list entries
+        xticklabels=classes,
+        yticklabels=classes,
+        title=title,
+        ylabel="True label",
+        xlabel="Michael's predicted label",
+    )
 
     # Rotate the tick labels and set their alignment.
-    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
-             rotation_mode="anchor")
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
 
     # Loop over data dimensions and create text annotations.
-    fmt = '.2f' if normalize else 'd'
-    thresh = cm.max() / 2.
+    fmt = ".2f" if normalize else "d"
+    thresh = cm.max() / 2.0
     for i in range(cm.shape[0]):
         for j in range(cm.shape[1]):
-            ax.text(j, i, format(cm[i, j], fmt),
-                    ha="center", va="center",
-                    color="white" if cm[i, j] > thresh else "black")
+            ax.text(
+                j,
+                i,
+                format(cm[i, j], fmt),
+                ha="center",
+                va="center",
+                color="white" if cm[i, j] > thresh else "black",
+            )
     fig.tight_layout()
     plt.show()
     return ax
@@ -77,13 +87,14 @@ image_size = 128
 num_channels = 3
 images = []
 succs = 0
-classes = ['1', '2', '3', '4']
+classes = ["1", "2", "3", "4"]
 true = []
 predicted = []
 probs = np.array([])
-path = os.path.join(testPath, '*g')
+path = os.path.join(testPath, "*g")
 files = glob.glob(path)
 for f in files:
+    print(f)
 
     # Reading the image using OpenCV
     image = cv2.imread(f)
@@ -92,17 +103,19 @@ for f in files:
     images = []
     images.append(image)
     images = np.array(images, dtype=np.uint8)
-    images = images.astype('float32')
-    images = np.multiply(images, 1.0/255.0)
+    images = images.astype("float32")
+    images = np.multiply(images, 1.0 / 255.0)
     # The input to the network is of shape [None image_size image_size num_channels]. Hence we reshape.
     x_batch = images.reshape(1, image_size, image_size, num_channels)
 
     # Let us restore the saved model
     sess = tf.Session()
     # Step-1: Recreate the network graph. At this step only graph is created.
-    saver = tf.train.import_meta_graph(dir_path+'/'+sys.argv[3]+'.meta')
+    saver = tf.train.import_meta_graph(dir_path + "/" + sys.argv[3] + ".meta")
     # Step-2: Now let's load the weights saved using the restore method.
-    saver.restore(sess, tf.train.latest_checkpoint(sys.argv[2]))
+    print(f"{dir_path}/{sys.argv[2]}")
+    saver.restore(sess, tf.train.latest_checkpoint(f"{dir_path}/{sys.argv[2]}"))
+    print("PRITINT")
 
     # Accessing the default graph which we have restored
     graph = tf.get_default_graph()
@@ -122,6 +135,6 @@ for f in files:
 
     probs = np.append(probs, result[0], axis=0)
     tempList = list(result[0])
-    predicted.append(str(tempList.index(max(tempList))+1))
+    predicted.append(str(tempList.index(max(tempList)) + 1))
     # result is of this format [probabiliy_of_blind probability_of_normal]
-    print('File: '+f+', class: ', str(tempList.index(max(tempList))+1))
+    print("File: " + f + ", class: ", str(tempList.index(max(tempList)) + 1))
